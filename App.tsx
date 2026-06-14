@@ -3,54 +3,23 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 import { Account, Expense } from './src/types';
 import { calcSafeToSpend } from './src/utils/budget';
 import { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import HomeScreen from './src/screens/HomeScreen';
 
 
-const AccountTest: Account = {
-  id: '1',
-  balance: 1200
-};
-
-
+const Tab = createBottomTabNavigator()
 
 
 export default function App() {
-
-
-  const [expenses,setExpenses] = useState<Expense[]>([]);
-
-  const handleChangeExpenses = () => {
-    
-    const newExpense: Expense = {
-      id: Math.random().toString(),
-      amount : Math.random(),
-      name : 'random1',
-      category: 'groceries'
-    };
-
-    setExpenses([...expenses,newExpense]);
-  }
-
-   const totalSpent = 
-   expenses.reduce( (sum, e) => sum + e.amount, 0 );
-
-
-
-
-
   return (
-    <View style={styles.container}>
-      <Text>Helooo!</Text>
-
-      <Button
-      title='add Random Expense'
-      onPress={() => handleChangeExpenses()}>
-      </Button>
-
-      <Text>Total Spent: ${totalSpent}</Text>
-      
-     
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+    
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -62,3 +31,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+
+  // const [expenses,setExpenses] = useState<Expense[]>([]);
+
+  // const handleChangeExpenses = () => {
+    
+  //   const newExpense: Expense = {
+  //     id: Math.random().toString(),
+  //     amount : Math.random(),
+  //     name : 'random1',
+  //     category: 'groceries'
+  //   };
+
+  //   setExpenses([...expenses,newExpense]);
+  // }
+
+  //  const totalSpent = 
+  //  expenses.reduce( (sum, e) => sum + e.amount, 0 );
