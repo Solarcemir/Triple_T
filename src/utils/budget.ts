@@ -47,6 +47,13 @@ export function calcPercentSpent (expenses : Expense[], budtype : Budget) : numb
   }
 
 
+export function AccountTotal(accounts : Account[]) : number {
+  return accounts.reduce((sum,e) => sum + e.balance,0);
+}
 
 
+//Para calcSavingsForPeriod no te doy código — es una 
+// combinación de cosas que ya tienes: filtras expenses con tu filterByDateRange, 
+// y restas ese total a algo (¿al total de balances? ¿a un ingreso fijo?). Piénsalo tú con las piezas 
+// que ya armaste.
 
