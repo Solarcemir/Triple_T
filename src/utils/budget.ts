@@ -6,18 +6,10 @@ export function calcSafeToSpend(account:Account, expenses: Expense[]): number {
 }
 
 
-export function showAvailableBudget(account: Account, expenses: Expense[], budget: Budget): number {
-
-
-}
-
-
 // this will return a hashlist 
 export function sumByCategory(expenses: Expense[]): Record<string,number>{
-
   const result:  Record<string,number> = {};
-
-  for (const e in expenses){
+  for (const e of expenses){
     if(result[e.budgetId] === undefined){
       result[e.budgetId] = 0;
     }
@@ -28,7 +20,6 @@ export function sumByCategory(expenses: Expense[]): Record<string,number>{
 
 // grouping per day, useful for graphs
 export function sumByDay(expenses: Expense[]): Record<string, number> {
-
   return expenses.reduce((acc, e) => {
     acc[e.date] = (acc[e.date] ?? 0) + e.amount;
     return acc;
@@ -36,9 +27,15 @@ export function sumByDay(expenses: Expense[]): Record<string, number> {
   }, {} as Record<string, number>);
 }
 
+
+  //return total of all accounts
+export function AccountTotal(accounts : Account[]) : number {
+  return accounts.reduce((sum,e) => sum + e.balance,0);
+}
+
+
 // grouping per percentage, for single bar for a single budget
 export function calcPercentSpent (expenses : Expense[], budtype : Budget) : number{
-
   const spent = expenses.filter(
     (e) => e.budgetId === budtype.id).reduce(
     (sum,e) => sum  + e.amount,0);
@@ -46,10 +43,15 @@ export function calcPercentSpent (expenses : Expense[], budtype : Budget) : numb
     return (spent/ budtype.limit) * 100;
   }
 
-
-export function AccountTotal(accounts : Account[]) : number {
-  return accounts.reduce((sum,e) => sum + e.balance,0);
+// this function will calculate total savings per ONE type of budget
+export function ShowAvailableBudget(budget: Budget, expenses: Expense[]) : number {
+  const spent = expenses.filter((e) => e.budgetId === budget.id).reduce((sum,e) => sum + e.amount,0)
+  return (budget.limit - spent);
 }
+
+
+
+
 
 
 //Para calcSavingsForPeriod no te doy código — es una 
